@@ -22,4 +22,34 @@ router.get('/allUser', (req, res, next)=>{
         });
 });
 
+router.post('/bitflag', async (req, res, next)=>{
+    try{
+        const user = await User.findOne({
+            where: {nick: req.body.nick}
+        });
+        if(user) {
+            // noinspection JSAnnotator
+            user.bitflag = Number(user.bitflag) + Number(req.body.bitflag);
+            const result = User.update({
+                bitflag: user.bitflag,
+            }, {
+                where: {nick:user.nick},
+            });
+            res.json({
+                nick: user.nick,
+                bitflage: user.bitflag
+            });
+        }
+        else {
+            res.json({
+                status: 404,
+                message: 'cannot found match user'
+            })
+        }
+    } catch(err) {
+        console.error(err);
+        next(err);
+    }
+});
+
 module.exports = router;
