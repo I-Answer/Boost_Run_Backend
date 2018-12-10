@@ -15,7 +15,7 @@ const sequelize = new Sequelize(
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-db.User = require('./user')(sequelize, Sequelize);
+db.User = require('./User')(sequelize, Sequelize);
 db.Record = require('./Record')(sequelize, Sequelize);
 
 db.User.hasMany(db.Record, { foreignKey: 'nick', sourceKey: 'nick' });
