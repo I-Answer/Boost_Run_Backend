@@ -39,6 +39,20 @@ router.post('/', async (req, res, next)=>{
                     time: req.body.time,
                     nick: req.body.nick,
                 });
+                if(user.maxSpeed < req.body.speed) {
+                    User.update({
+                        maxSpeed: req.body.speed,
+                    }, {
+                        where: {nick: user.nick}
+                    })
+                }
+                if(user.maxTime < req.body.time) {
+                    User.update({
+                        maxTime: req.body.time,
+                    }, {
+                        where: {nick: user.nick}
+                    })
+                }
                 res.json(result);
             } catch (err) {
                 console.error(err);
