@@ -1,8 +1,10 @@
 const express = require('express');
 
 const User = require('../models').User;
+const cors = require('cors');
 
 const router = express.Router();
+router.use(cors());
 
 // 루트 라우터
 router.post('/user', async (req, res, next)=>{
