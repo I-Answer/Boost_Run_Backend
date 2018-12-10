@@ -67,4 +67,18 @@ router.post('/', async (req, res, next)=>{
         }
 });
 
+router.get('/rank/speed', async (req, res, next)=>{
+    try{
+        const users = await User.findAll({
+            attributes: ['id','nick','maxSpeed'],
+            order: [['maxSpeed','DESC']],
+            limit: 10,
+        });
+        res.json(users);
+    } catch (err) {
+        console.log(err);
+        next(err);
+    }
+});
+
 module.exports = router;
