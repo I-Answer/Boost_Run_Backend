@@ -5,9 +5,9 @@ const db = {};
 const sequelize = new Sequelize(
     'boostrun', // DB 이름
     'root', // 유저명
-    'espada8012!', // 패스워드
+    '1234', // 패스워드
     {
-        'host':'127.0.0.1', //사용할 호스트
+        'host':'13.59.174.126', //사용할 호스트
         'dialect':'mysql' //사용할 DB 종류
     }
 );
