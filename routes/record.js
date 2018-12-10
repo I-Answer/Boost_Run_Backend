@@ -2,8 +2,11 @@ const express = require('express');
 
 const Record = require('../models').Record;
 const User = require('../models').User;
+const cors = require('cors');
 
 const router = express.Router();
+
+router.use(cors());
 
 router.get('/:nick',async (req, res, next)=>{
    try{
