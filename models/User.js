@@ -16,6 +16,14 @@ module.exports = (sequelize, DataTypes) => {
         bitflag: {
             type: DataTypes.INTEGER,
             defaultValue: 0
+        },
+        maxSpeed: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        maxTime: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
         }
     }, {
         timestamps: false,
