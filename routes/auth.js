@@ -37,7 +37,7 @@ router.get('/user/:nick', async (req, res, next)=>{
             where: {nick: req.params.nick}
         });
         if(user) {
-            res.json({user});
+            res.json({"user":[user]});
         }
         else{
             res.json({
