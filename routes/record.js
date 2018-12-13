@@ -56,7 +56,7 @@ router.post('/', async (req, res, next)=>{
                         where: {nick: user.nick}
                     })
                 }
-                res.json(result);
+                res.json({result});
             } catch (err) {
                 console.error(err);
                 next(err);
@@ -77,7 +77,7 @@ router.get('/rank/speed', async (req, res, next)=>{
             order: [['maxSpeed','DESC']],
             limit: 10,
         });
-        res.json(users);
+        res.json({"user":users});
     } catch (err) {
         console.log(err);
         next(err);
@@ -91,7 +91,7 @@ router.get('/rank/time', async (req, res, next)=>{
             order: [['maxTime','DESC']],
             limit: 10,
         });
-        res.json(users);
+        res.json({"user":users});
     } catch(err) {
         console.log(err);
         next(err);
