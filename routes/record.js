@@ -33,31 +33,37 @@ router.get('/:nick',async (req, res, next)=>{
 });
 
 router.post('/', async (req, res, next)=>{
-    const user = await User.findOne({
+    const users = await User.findOne({
         where: {nick: req.body.nick}
     });
-        if(user) {
+        if(users) {
             try{
-                const result = await Record.create({
+                const user = await Record.create({
                     speed: req.body.speed,
                     time: req.body.time,
                     nick: req.body.nick,
                 });
-                if(user.maxSpeed < req.body.speed) {
+                if(users.maxSpeed < req.body.speed) {
                     User.update({
                         maxSpeed: req.body.speed,
                     }, {
-                        where: {nick: user.nick}
+                        where: {nick: users.nick}
                     })
                 }
-                if(user.maxTime < req.body.time) {
+                if(users.maxTime < req.body.time) {
                     User.update({
                         maxTime: req.body.time,
                     }, {
-                        where: {nick: user.nick}
+                        where: {nick: users.nick}
                     })
                 }
-                res.json({result});
+                res.json({"user":[{
+                        "id":user.id,
+                        "speed":user.speed,
+                        "time":user.time,
+                        "nick":user.nick,
+                        "createdAt":user.createdAt
+                    }]});
             } catch (err) {
                 console.error(err);
                 next(err);
