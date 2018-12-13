@@ -26,7 +26,7 @@ router.post('/user', async (req, res, next)=>{
             })
                 .then((result)=>{
                     console.log(result);
-                    res.json(result).status(201);
+                    res.json({"user":[result]}).status(201);
                 })
         }
 });
