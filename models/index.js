@@ -9,7 +9,7 @@ const sequelize = new Sequelize(
     {
         'host':'127.0.0.1', //사용할 호스트
         'dialect':'mysql', //사용할 DB 종류
-        'operatorAliases':false //deprecated 된 연산자 사용
+        'operatorsAliases':false //deprecated 된 연산자 사용
     }
 );
 
