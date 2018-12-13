@@ -35,9 +35,10 @@ router.post('/bitflag', async (req, res, next)=>{
             }, {
                 where: {nick:user.nick},
             });
-            res.json({
-                nick: user.nick,
-                bitflage: user.bitflag
+            res.json({"user":[{
+                    nick: user.nick,
+                    bitflage: user.bitflag
+                }]
             });
         }
         else {
