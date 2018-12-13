@@ -14,9 +14,10 @@ router.get('/:nick',async (req, res, next)=>{
            where: {nick: req.params.nick}
        });
        if(user) {
-           res.json({
-               maxSpeed: user.maxSpeed,
-               maxTime: user.maxTime,
+           res.json({"user":[{
+                   maxSpeed: user.maxSpeed,
+                   maxTime: user.maxTime,
+               }]
            })
        } else{
            console.log('cannot found match user');
