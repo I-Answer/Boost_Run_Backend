@@ -13,9 +13,14 @@ router.post('/user', async (req, res, next)=>{
     });
         if(user){
         console.log(user);
-         res.json({
-                status: 409,
-                message: 'duplicate nickname error'
+         res.json({"user":[{
+                 "shiplist": null,
+                 "curship": null,
+                 "sp": null,
+                 "id": null,
+                 "password": null,
+                 "nick": null
+             }]
             });
         }
         else{
