@@ -41,8 +41,18 @@ router.get('/user/:nick', async (req, res, next)=>{
         }
         else{
             res.json({
-                status: 404,
-                message: 'cannot found match user'
+                "user":[
+                    {
+                        "id": null,
+                        "password": null,
+                        "nick":  null,
+                        "shiplist": null,
+                        "curship": null,
+                        "sp": null,
+                        "maxSpeed": null,
+                        "maxTime": null
+                    }
+                ]
             })
         }
     } catch (err) {
