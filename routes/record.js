@@ -142,4 +142,40 @@ router.get('/rank/speed/:nick', async (req, res, next)=>{
     }
 })
 
+router.get('/rank/time/:nick', async (req, res, next)=>{
+    try {
+        const user = await User.findOne({
+            where: {nick : req.params.nick}
+        });
+        if(user)
+        {
+            console.log(`유저의 maxTime 은 ${user.maxTime} 입니다`);
+            User.findAll({
+                attributes: ['nick'],
+                where: {maxTime: { [Op.gt] : user.maxTime }}
+            })
+                .then((others)=>{
+                    console.log(`유저의 순위는 ${others.length + 1}위 입니다`);
+                    res.json({"user":[{
+                            "success":1,
+                            "rank":others.length+1,
+                            "nick": req.params.nick,
+                            "maxTime":user.maxTime
+                        }]})
+                })
+        } else {
+            console.log('nick에 해당하는 유저가 존재하지 않습니다');
+            res.json({"user":[{
+                    "success":0,
+                    "rank":null,
+                    "nick":null,
+                    "maxTime":null
+                }]})
+        }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+})
+
 module.exports = router;
