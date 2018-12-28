@@ -2,6 +2,7 @@ const express = require('express');
 
 const Record = require('../models').Record;
 const User = require('../models').User;
+const {Sequelize: { Op }} = require('../models');
 const cors = require('cors');
 
 const router = express.Router();
@@ -104,5 +105,41 @@ router.get('/rank/time', async (req, res, next)=>{
         next(err);
     }
 });
+
+router.get('/rank/speed/:nick', async (req, res, next)=>{
+    try {
+        const user = await User.findOne({
+            where: {nick : req.params.nick}
+        });
+        if(user)
+        {
+            console.log(`유저의 maxSpeed 는 ${user.maxSpeed} 입니다`);
+            User.findAll({
+                attributes: ['nick'],
+                where: {maxSpeed: { [Op.gt] : user.maxSpeed }}
+            })
+                .then((others)=>{
+                    console.log(`유저의 순위는 ${others.length + 1}위 입니다`);
+                    res.json({"user":[{
+                            "success":1,
+                            "rank":others.length+1,
+                            "nick": req.params.nick,
+                            "maxSpeed":user.maxSpeed
+                        }]})
+                })
+        } else {
+            console.log('nick에 해당하는 유저가 존재하지 않습니다');
+            res.json({"user":[{
+                "success":0,
+                    "rank":null,
+                    "nick":null,
+                    "maxSpeed":null
+                }]})
+        }
+    } catch (error) {
+        console.error(error);
+        next(error);
+    }
+})
 
 module.exports = router;
