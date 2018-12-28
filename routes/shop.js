@@ -7,6 +7,16 @@ const router = express.Router();
 
 router.use(cors());
 
+function oper(num) {
+    let tmp = 0;
+    while (num > 1) {
+        num = num % 2;
+        tmp ++;
+    }
+    tmp ++;
+    return tmp;
+}
+
 router.get('/sp/:nick', async(req, res, next)=>{
     try {
         const user = await User.findOne({
@@ -44,13 +54,17 @@ router.post('/buy/ship', async (req, res, next)=>{
             if(tmp < 0)
             {
                 res.json({"user":[{
-                    success : 0
+                    success : 0,
+                        shiplist: user.shiplist
                     }]})
             }
             else {
-                User.update({sp: tmp},{ where: {nick: req.body.nick}});
+                console.log(`${user.nick}님이 ${oper(Number(req.body.type))}번 비행기를 구입했습니다`);
+                let bitflag = Number(user.shiplist) + Number(req.body.type);
+                User.update({sp: tmp, shiplist: bitflag},{ where: {nick: req.body.nick}});
                 res.json({"user":[{
-                        success : 1
+                        success : 1,
+                        shiplist: bitflag
                     }]});
             }
         }
