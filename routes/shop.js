@@ -7,6 +7,30 @@ const router = express.Router();
 
 router.use(cors());
 
+router.get('/sp/:nick', async(req, res, next)=>{
+    try {
+        const user = await User.findOne({
+            where : {nick : req.params.nick}
+        });
+        if(user) {
+            console.log(`${user.nick}님은 현재 ${user.sp} sp를 보유중입니다`);
+            res.json({"user":[{
+                success : 1,
+                sp : user.sp
+                }]})
+        } else {
+            console.log('닉네임에 해당하는 유저를 찾지 못했습니다');
+            res.json({"user":[{
+                success : 0,
+                    sp : null
+                }]})
+        }
+    } catch(error) {
+        console.error(error);
+        next(error)
+    }
+})
+
 router.post('/buy/ship', async (req, res, next)=>{
     let tmp;
     try {
