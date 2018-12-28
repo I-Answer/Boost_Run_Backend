@@ -7,6 +7,7 @@ const session = require('express-session');
 const indexRouter = require('./routes');
 const authRouter = require('./routes/auth');
 const recordRouter = require('./routes/record');
+const shopRouter = require('./routes/shop');
 const sequelize = require('./models').sequelize;
 
 const app = express();
@@ -34,6 +35,7 @@ app.use(session({
 app.use('/', indexRouter);
 app.use('/auth', authRouter);
 app.use('/record', recordRouter);
+app.use('/shop', shopRouter);
 
 // 해당 라우터가 없을시 404 Error 발생
 app.use((req, res, next)=>{
