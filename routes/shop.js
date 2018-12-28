@@ -10,7 +10,7 @@ router.use(cors());
 function oper(num) {
     let tmp = 0;
     while (num > 1) {
-        num = num % 2;
+        num = num / 2;
         tmp ++;
     }
     tmp ++;
@@ -59,7 +59,7 @@ router.post('/buy/ship', async (req, res, next)=>{
                     }]})
             }
             else {
-                console.log(`${user.nick}님이 ${oper(Number(req.body.type))}번 비행기를 구입했습니다`);
+                console.log(`${user.nick}님이 ${oper(Number(req.body.type))}번 우주선을 구입했습니다`);
                 let bitflag = Number(user.shiplist) + Number(req.body.type);
                 User.update({sp: tmp, shiplist: bitflag},{ where: {nick: req.body.nick}});
                 res.json({"user":[{
