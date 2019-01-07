@@ -1,5 +1,4 @@
 const express = require('express');
-
 const Record = require('../models').Record;
 const User = require('../models').User;
 const {Sequelize: { Op }} = require('../models');
@@ -34,11 +33,19 @@ router.get('/:nick',async (req, res, next)=>{
 });
 
 router.post('/', async (req, res, next)=>{
+    let x = Number(req.body.time);
+    let y = Number(req.body.speed);
+    x = (Math.pow((0.0001 * x),2)) + (0.0708 * x) + 2;
+    if(y < 1800) y =0;
+    if(y >= 1800) y-=1800;
+    y = (Math.pow((0.00002* y),2)) + (0.003 * y) + 2;
+    let sp = Math.floor(x + y);
     const users = await User.findOne({
         where: {nick: req.body.nick}
     });
         if(users) {
             try{
+                sp = sp + users.sp;
                 const user = await Record.create({
                     speed: req.body.speed,
                     time: req.body.time,
@@ -58,6 +65,12 @@ router.post('/', async (req, res, next)=>{
                         where: {nick: users.nick}
                     })
                 }
+                User.update({
+                    sp: sp,
+                }, {
+                    where: {nick: users.nick}
+                });
+
                 res.json({"user":[{
                         "id":user.id,
                         "speed":user.speed,
