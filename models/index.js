@@ -7,7 +7,7 @@ const sequelize = new Sequelize(
     'root', // 유저명
     '1234', // 패스워드
     {
-        'host':'13.59.174.126', //사용할 호스트
+        'host':'18.220.117.207', //사용할 호스트
         'dialect':'mysql', //사용할 DB 종류
         'operatorsAliases':false //deprecated 된 연산자 사용
     }
