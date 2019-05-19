@@ -32,7 +32,7 @@ router.post('/signIn', async (req, res)=> {
             function sign(user) {
                 let token = jwt.sign({
                         // 토큰의 내용 (payload)
-                        nickname: user.nickname,
+                        nick: user.nick,
                         intro: user.intro,
                         id: user.id
                     },
@@ -71,7 +71,7 @@ router.post('/signUp', async (req, res)=>{
             let result = await User.create({
                 id: req.body.id,
                 password: req.body.password,
-                nickname: req.body.nickname
+                nick: req.body.nick
             });
             res.json({
                 result
