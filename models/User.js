@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
     return sequelize.define('User', {
         id: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING(30),
             primaryKey: true
         },
         password: {
